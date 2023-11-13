@@ -19,8 +19,8 @@ resource "aws_s3_bucket_versioning" "weasel_s3_versioning" {
   bucket = aws_s3_bucket.weasel_s3.id
   versioning_configuration {
     status = "Enabled"
-  } 
   }
+}
 
 
 # Resource block for configuring server-side encryption on the S3 bucket
