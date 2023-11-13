@@ -40,11 +40,11 @@ resource "aws_security_group" "weasel_sg_db" {
     security_groups = [aws_security_group.weasel_sg_web.id]
   }
 
-  # This is typically locked down further in production environments.
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.egress_cidr_blocks
   }
 }

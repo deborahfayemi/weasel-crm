@@ -107,7 +107,7 @@ variable "ingress_cidr_blocks_web" {
   default     = ["0.0.0.0/0"]
 }
 
-variable "ingress_cidr_blocks_db" {
+variable "egress_cidr_blocks" {
   description = "CIDR blocks for database ingress traffic."
   type        = list(string)
   default     = ["0.0.0.0/0"]
