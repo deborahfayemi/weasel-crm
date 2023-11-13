@@ -47,7 +47,7 @@ variable "rds_instance_class" {
 variable "db_engine_version" {
   description = "The version of the database engine."
   type        = string
-  default     = "5.7.30"
+  default     = "8.0.34"
 }
 
 variable "db_storage_type" {
@@ -65,7 +65,7 @@ variable "db_engine" {
 variable "db_allocated_storage" {
   description = "The allocated storage for the RDS instance."
   type        = number
-  default     = 20
+  default     = 10
 }
 
 variable "skip_final_snapshot" {
@@ -86,12 +86,6 @@ variable "db_max_allocated_storage" {
   type        = number
   default     = 100
 }
-
-# variable "db_name" {
-#   description = "The name for the RDS instance."
-#   type        = string
-#   default     = "weaselcrm"
-# }
 
 variable "db_username" {
   description = "The username for the RDS instance."
