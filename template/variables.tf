@@ -19,6 +19,17 @@ variable "common_app_name" {
 
 }
 
+variable "use_default_vpc" {
+  description = "Use default VPC if true, otherwise use VPC identified by vpc_tag_name"
+  type        = bool
+}
+
+variable "vpc_tag_name" {
+  description = "Tag Name of the VPC to search for when not using the default VPC"
+  type        = string
+}
+
+
 # EC2 instance variables
 variable "ami_id" {
   description = "The AMI ID for the EC2 instances."
@@ -35,6 +46,23 @@ variable "ec2_instance_count" {
   description = "The number of EC2 instances to launch."
   type        = number
   default     = 2
+}
+
+variable "ec2_volume_type" {
+  description = "Type of volume to be attached to the ec2"
+  type        = string
+  default     = "gp2"
+}
+
+variable "ec2_volume_size" {
+  description = "Size of volume to be attached to the ec2"
+  type        = number
+  default     = 100
+}
+
+variable "public_key_path" {
+  description = "Path to the public key to be used for SSH access"
+  type        = string
 }
 
 # RDS database variables
@@ -108,7 +136,12 @@ variable "ingress_cidr_blocks_web" {
 }
 
 variable "egress_cidr_blocks" {
-  description = "CIDR blocks for database ingress traffic."
+  description = "CIDR blocks for egress traffic"
   type        = list(string)
   default     = ["0.0.0.0/0"]
+}
+
+variable "ingress_cidr_blocks_ssh" {
+  description = "CIDR blocks for EC2 ssh ingress traffic"
+  type        = list(string)
 }
