@@ -2,14 +2,17 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws" # Indicates the source of the AWS provider
-      version = "~> 3.0"        # Pinning the provider version to ensure compatibility
+      source  = "hashicorp/aws"
+      version = "~> 5.0" # Automatically use the latest AWS provider version in the 5.x line
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.0" # Automatically use the latest random provider version in the 3.x line
     }
   }
-
-  required_version = ">= 0.13" # Minimum Terraform version required for this module
+  required_version = ">= 0.13" # The minimum required Terraform version
 }
 
 provider "aws" {
-  region = var.region # AWS region where resources will be created
+  region = var.region
 }
