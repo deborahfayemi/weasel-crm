@@ -3,14 +3,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0" # Automatically use the latest AWS provider version in the 5.x line
+      version = "~> 5.0"
     }
     random = {
       source  = "hashicorp/random"
-      version = ">= 3.0" # Automatically use the latest random provider version in the 3.x line
+      version = ">= 3.0"
     }
   }
-  required_version = ">= 0.13" # The minimum required Terraform version
+  required_version = ">= 0.13"
 }
 
 provider "aws" {
