@@ -2,9 +2,9 @@
 resource "aws_s3_bucket" "weasel_s3" {
   bucket = "${var.common_app_name}-${random_id.bucket_suffix.hex}"
 
-  # Prevent accidental deletion of this S3 bucket by enabling lifecycle settings
+
   lifecycle {
-    prevent_destroy = true
+    create_before_destroy = true
   }
 
   # Tags for identifying the S3 bucket resource
@@ -49,5 +49,5 @@ resource "random_id" "bucket_suffix" {
     id = "${var.common_app_name}-S3-Bucket"
   }
 
-  byte_length = 8 # Generates a random 8-byte (16-character) hexadecimal string
+  byte_length = 1
 }
