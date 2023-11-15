@@ -1,9 +1,3 @@
-# Resource block for the key pair
-resource "aws_key_pair" "ec2_key_pair" {
-  key_name   = "${var.common_app_name}-key"
-  public_key = file(var.public_key_path)
-}
-
 # Resource block for creating EC2 instances
 resource "aws_instance" "weasel_ec2" {
   count         = var.ec2_instance_count
@@ -11,8 +5,13 @@ resource "aws_instance" "weasel_ec2" {
   instance_type = var.instance_type
   key_name      = aws_key_pair.ec2_key_pair.key_name
 
-  subnet_id = var.use_default_vpc ? element(tolist(data.aws_subnet_ids.default_subnets.ids), count.index) : element(tolist(data.aws_subnet_ids.selected_subnets.ids), count.index)
+  # Distribute instances across the available public subnets
+  subnet_id = aws_subnet.public_subnet[count.index % length(aws_subnet.public_subnet)].id
 
+  vpc_security_group_ids = [aws_security_group.weasel_sg_web.id]
+
+  # Attach a public IP to each instance
+  associate_public_ip_address = var.ec2_associate_public_ip_address
 
   #attach ebs volume to ec2
   root_block_device {
