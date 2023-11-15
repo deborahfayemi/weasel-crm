@@ -19,15 +19,11 @@ variable "common_app_name" {
 
 }
 
-variable "use_default_vpc" {
-  description = "Use default VPC if true, otherwise use VPC identified by vpc_tag_name"
-  type        = bool
-}
-
-variable "vpc_tag_name" {
-  description = "Tag Name of the VPC to search for when not using the default VPC"
+variable "vpc_id" {
+  description = "The ID of the VPC where resources will be deployed"
   type        = string
 }
+
 
 
 # EC2 instance variables
@@ -99,7 +95,7 @@ variable "db_allocated_storage" {
 variable "skip_final_snapshot" {
   description = "Skips the final snapshot before deleting the DB. For production, set to false."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "parameter_group_name" {
@@ -144,4 +140,92 @@ variable "egress_cidr_blocks" {
 variable "ingress_cidr_blocks_ssh" {
   description = "CIDR blocks for EC2 ssh ingress traffic"
   type        = list(string)
+}
+
+variable "public_subnet_cidr" {
+  description = "CIDR block list for the public subnet"
+  type        = list(string)
+}
+
+variable "private_subnet_cidr" {
+  description = "CIDR block list for the private subnet"
+  type        = list(string)
+}
+
+variable "rds_multi_az" {
+  description = "Define if the db should be highly available"
+  type        = bool
+  default     = false
+}
+
+variable "public_route_cidrs" {
+  description = "List of CIDR blocks for public routes"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "alb_security_group_ingress_cidr_blocks" {
+  description = "List of CIDR blocks for ALB ingress traffic"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "alb_port" {
+  description = "The port on which the ALB listens"
+  type        = number
+  default     = 80
+}
+
+variable "alb_health_check_path" {
+  description = "Path for ALB health check"
+  type        = string
+  default     = "/"
+}
+
+variable "alb_internal" {
+  description = "Determines if the load balancer is internal"
+  type        = bool
+  default     = false
+}
+
+variable "alb_load_balancer_type" {
+  description = "The type of load balancer to create"
+  type        = string
+  default     = "application"
+}
+
+variable "alb_health_check_interval" {
+  description = "The approximate amount of time, in seconds, between health checks of an individual target"
+  type        = number
+  default     = 30
+}
+
+variable "alb_health_check_timeout" {
+  description = "The amount of time, in seconds, during which no response means a failed health check."
+  type        = number
+  default     = 5
+}
+
+variable "alb_health_check_healthy_threshold" {
+  description = "The number of consecutive health checks successes required before considering an unhealthy target healthy."
+  type        = number
+  default     = 2
+}
+
+variable "alb_health_check_unhealthy_threshold" {
+  description = "The number of consecutive health check failures required before considering the target unhealthy."
+  type        = number
+  default     = 2
+}
+
+variable "alb_health_check_matcher" {
+  description = "The HTTP codes to use when checking for a successful response from a target."
+  type        = string
+  default     = "200"
+}
+
+variable "ec2_associate_public_ip_address" {
+  description = "Option to associate ec2 with a public ip address"
+  type        = bool
+  default     = false
 }
